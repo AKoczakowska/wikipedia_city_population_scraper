@@ -48,7 +48,7 @@ def get_population_from_infobox(city_name):
 
     return None
 
-input_file = "C:/Users/a.koczakowska/Desktop/Wielkosc_miejscowosci/Próba TUR.xlsx"
+input_file = "test.xlsx"
 df = pd.read_excel(input_file)
 
 if 'Miejscowość' not in df.columns:
@@ -69,6 +69,18 @@ for index, row in df.iterrows():
             miasto_rozszerzone = f"{miasto}_(województwo_{woj})"
             populacja = get_population_from_infobox(miasto_rozszerzone)
             print(f"🔁 Próba ponowna z: {miasto_rozszerzone}")
+
+
+    if populacja is None:
+        miasto_miasto = f"{miasto}_(miasto)"
+        populacja = get_population_from_infobox(miasto_miasto)
+        print(f"🔁 Próba ponowna z: {miasto_miasto}")
+
+
+    if populacja is None:
+        miasto_wies = f"{miasto}_(wieś)"
+        populacja = get_population_from_infobox(miasto_wies)
+        print(f"🔁 Próba ponowna z: {miasto_wies}")
 
     df.at[index, 'liczba_ludności'] = populacja
     print(f"{index + 1}/{len(df)} - {miasto}: {populacja}")
